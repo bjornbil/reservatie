@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<jnlp spec="1.0" xmlns:jfx="http://javafx.com" href="ReservatieKommaFinal.jnlp">
+  <information>
+    <title>ReservatieKommaFinal</title>
+    <vendor>Bejarn</vendor>
+    <description>Sample JavaFX 2.0 application.</description>
+    <offline-allowed/>
+  </information>
+  <resources>
+    <jfx:javafx-runtime version="2.2+" href="http://javadl.sun.com/webapps/download/GetFile/javafx-latest/windows-i586/javafx2.jnlp"/>
+  </resources>
+  <resources>
+    <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
+    <jar href="ReservatieKommaFinal.jar" size="24166" download="eager" />
+    <jar href="lib/ReservatieEJBFinal.jar" size="12991" download="eager" />
+    <jar href="lib/appserv-rt.jar" size="2641" download="eager" />
+    <jar href="lib/gf-client.jar" size="18637" download="eager" />
+    <jar href="lib/javaee.jar" size="2813" download="eager" />
+    <jar href="lib/jndi-properties.jar" size="1449" download="eager" />
+  </resources>
+  <applet-desc  width="800" height="600" main-class="com.javafx.main.NoJavaFXFallback"  name="ReservatieKommaFinal" >
+    <param name="requiredFXVersion" value="2.2+"/>
+  </applet-desc>
+  <jfx:javafx-desc  width="800" height="600" main-class="be.khleuven.bjornbillen.controller.MainView"  name="ReservatieKommaFinal" />
+  <update check="always"/>
+</jnlp>
