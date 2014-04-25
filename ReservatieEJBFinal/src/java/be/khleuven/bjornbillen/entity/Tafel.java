@@ -34,28 +34,16 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Bjorn
  */
 @Entity
-@Table(name = "TAFEL", uniqueConstraints={@UniqueConstraint(columnNames={"TABLEID"})})
-@XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Tafel.findAll", query = "SELECT t FROM Tafel t"),
-    @NamedQuery(name = "Tafel.findById", query = "SELECT t FROM Tafel t WHERE t.tID = :id"),
-})
 public class Tafel implements Serializable{
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "TABLEID")
-    private Integer tID;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 255)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "TAFELID")
+    private int tID;
     @Column(name = "DESCRIPTION")
     private String tDescription;
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "PLACES")
     private Integer tPlaces;
-    @OneToMany
-    @JoinTable(name="RES_TAFEL", joinColumns={@JoinColumn(name="TAFEL_ID", referencedColumnName="TAFELID")}, inverseJoinColumns={@JoinColumn(name="RES_ID", referencedColumnName="RESID")})
+    @OneToMany(mappedBy="rTable")
     private List<Reservation> reservations;
 
   
@@ -78,11 +66,11 @@ public class Tafel implements Serializable{
     }
 
     
-    public Integer getTID() {
+    public int getTID() {
         return tID;
     }
 
-    public void setTID(Integer tID) {
+    public void setTID(int tID) {
         this.tID = tID;
     }
 

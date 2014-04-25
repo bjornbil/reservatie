@@ -2,16 +2,18 @@
 
 <?import java.lang.*?>
 <?import javafx.collections.*?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="be.khleuven.bjornbillen.controller.MainController">
+<AnchorPane id="AnchorPane" maxHeight="600.0" maxWidth="800.0" minHeight="600.0" minWidth="800.0" prefHeight="600.0" prefWidth="800.0" snapToPixel="true" translateZ="1.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="be.khleuven.bjornbillen.controller.MainController">
   <children>
-    <SplitPane disable="false" dividerPositions="0.794314381270903" focusTraversable="true" orientation="VERTICAL" prefHeight="600.0" prefWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="3.0" AnchorPane.rightAnchor="-3.0" AnchorPane.topAnchor="0.0">
+    <SplitPane disable="false" dividerPositions="0.78719723183391" focusTraversable="true" orientation="VERTICAL" prefHeight="600.0" prefWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="3.0" AnchorPane.rightAnchor="-3.0" AnchorPane.topAnchor="0.0">
       <items>
-        <AnchorPane disable="false" minHeight="0.0" minWidth="0.0" prefHeight="405.0" prefWidth="798.0">
+        <AnchorPane disable="false" minHeight="0.0" minWidth="0.0" prefHeight="482.0" prefWidth="812.0">
           <children>
-            <TableView fx:id="tableID" prefHeight="600.0" prefWidth="798.0" tableMenuButtonVisible="true" visible="true" AnchorPane.bottomAnchor="-304.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <TableView fx:id="tableID" prefHeight="452.0" prefWidth="782.0" tableMenuButtonVisible="true" visible="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
               <columns>
                 <TableColumn prefWidth="75.0" resizable="false" text="ID" fx:id="iID" />
                 <TableColumn prefWidth="300.0" text="Naam" fx:id="iName" />
@@ -20,25 +22,28 @@
                 <TableColumn prefWidth="75.0" resizable="false" text="Einduur" fx:id="iStop" />
                 <TableColumn prefWidth="75.0" resizable="false" text="Tafel" fx:id="iTable" />
               </columns>
+              <effect>
+                <InnerShadow />
+              </effect>
             </TableView>
           </children>
         </AnchorPane>
-        <AnchorPane blendMode="RED" cache="true" cacheHint="DEFAULT" depthTest="INHERIT" disable="false" focusTraversable="false" maxHeight="120.0" maxWidth="800.0" minHeight="0.0" minWidth="0.0" opacity="1.0" prefHeight="120.0" prefWidth="798.0" snapToPixel="true">
+        <AnchorPane blendMode="SRC_OVER" cache="true" cacheHint="DEFAULT" depthTest="INHERIT" disable="false" focusTraversable="false" maxHeight="120.0" maxWidth="860.0" minHeight="0.0" minWidth="0.0" opacity="1.0" prefHeight="106.0" prefWidth="782.0" snapToPixel="true">
           <children>
             <TextField fx:id="nameInput" layoutX="14.0" layoutY="24.0" prefWidth="171.0" promptText="Naam" text="" />
             <Label layoutX="59.0" layoutY="-1.0" prefHeight="22.0" prefWidth="164.0" text="Naam Reservatie" />
-            <Button fx:id="submit" layoutX="416.0" layoutY="49.0" mnemonicParsing="false" onAction="#onAddReservation" prefHeight="25.0" prefWidth="100.0" text="Toevoegen" />
+            <Button fx:id="submit" layoutX="350.0" layoutY="75.0" mnemonicParsing="false" onAction="#onAddReservation" prefHeight="25.0" prefWidth="100.0" text="Toevoegen" />
             <ComboBox fx:id="startHoursInput" layoutX="209.0" layoutY="24.0" prefHeight="25.0" prefWidth="59.0" />
             <ComboBox fx:id="stopHoursInput" layoutX="209.0" layoutY="78.0" prefHeight="25.0" prefWidth="59.0" />
-            <ComboBox fx:id="tableInput" layoutX="349.0" layoutY="49.0" prefHeight="25.0" prefWidth="12.0" />
+            <ComboBox fx:id="tableInput" layoutX="350.0" layoutY="24.0" prefHeight="25.0" prefWidth="77.0" />
             <ComboBox fx:id="startMinsInput" layoutX="274.0" layoutY="24.0" prefHeight="25.0" prefWidth="59.0" />
             <ComboBox fx:id="stopMinsInput" layoutX="274.0" layoutY="78.0" prefHeight="25.0" prefWidth="59.0" />
             <Label layoutX="217.0" layoutY="6.0" text="Startuur" />
             <Label layoutX="218.0" layoutY="53.0" text="Einduur" />
-            <Label layoutX="356.0" layoutY="28.0" text="Tafelnr" />
+            <Label layoutX="356.0" layoutY="0.0" prefHeight="25.0" prefWidth="43.0" text="Tafel" />
             <Label layoutX="59.0" layoutY="53.0" text="Datum reservatie" />
             <TextField fx:id="dateInput" layoutX="14.0" layoutY="80.0" prefWidth="171.0" promptText="DD/MM/YYYY" />
-            <Separator layoutX="526.0" layoutY="-6.0" orientation="VERTICAL" prefHeight="125.0" prefWidth="9.0" />
+            <Separator layoutX="500.0" layoutY="-6.0" orientation="VERTICAL" prefHeight="125.0" prefWidth="9.0" />
             <Label layoutX="563.0" layoutY="5.0" prefHeight="18.0" prefWidth="77.0" text="Naam tafel" />
             <TextField fx:id="tableInject" layoutX="540.0" layoutY="28.0" prefWidth="100.0" />
             <Label layoutX="669.0" layoutY="6.0" prefWidth="91.0" text="Aantal plaatsen" />
@@ -53,8 +58,20 @@
             </ComboBox>
             <Button id="submit" fx:id="submit2" layoutX="602.0" layoutY="68.0" mnemonicParsing="false" onAction="#onAddTable" prefHeight="25.0" prefWidth="100.0" text="Toevoegen" />
           </children>
+          <effect>
+            <InnerShadow />
+          </effect>
         </AnchorPane>
       </items>
     </SplitPane>
   </children>
+  <effect>
+    <InnerShadow choke="0.13492063492063494" color="#8e0000" height="33.095238095238095" radius="16.047619047619047" width="33.095238095238095" />
+  </effect>
+  <padding>
+    <Insets bottom="10.0" left="6.0" right="10.0" top="10.0" />
+  </padding>
+  <rotationAxis>
+    <Point3D z="1.0" />
+  </rotationAxis>
 </AnchorPane>

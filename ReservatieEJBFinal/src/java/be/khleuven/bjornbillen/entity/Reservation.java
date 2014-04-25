@@ -17,42 +17,22 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Bjorn
  */
 @Entity
-@Table(name = "RESERVATION", uniqueConstraints={@UniqueConstraint(columnNames={"RESID"})})
-@XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Reservation.findAll", query = "SELECT r FROM Reservation r"),
-    @NamedQuery(name = "Reservation.findById", query = "SELECT r FROM Reservation r WHERE r.rID = :id"),
-    @NamedQuery(name = "Reservation.findByDate", query = "SELECT r FROM Reservation r WHERE r.rDate = :date"),
-    @NamedQuery(name = "Reservation.findByName", query = "SELECT r FROM Reservation r WHERE r.rName = :name"),
-})
 public class Reservation implements Serializable {
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name="RESID")
-    private Integer rID;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 255)
+    private int rID;
     @Column(name = "NAME")
     private String rName;
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "RESDATE")
     private String rDate;
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "STARTHOUR")
     private String rStartHour;
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "STOPHOUR")
     private String rStopHour;
-    @NotNull
     @ManyToOne
+    @JoinColumn(name="TABLE_ID")
     private Tafel rTable;
-
- 
-    private String tableDescr = "";
 
     public Reservation() {
     }
@@ -63,7 +43,6 @@ public class Reservation implements Serializable {
         this.rStartHour = sStartHour;
         this.rStopHour = sStopHour;
         this.rTable = sTable;
-        this.tableDescr = rTable.getTDescription();
     }
 
     public String getRStartHour() {
@@ -74,7 +53,7 @@ public class Reservation implements Serializable {
         return rStopHour;
     }
     
-    public Integer getRID() {
+    public int getRID() {
         return rID;
     }
 
@@ -86,7 +65,7 @@ public class Reservation implements Serializable {
         return rDate;
     }
     
-    public void setRID(Integer id){
+    public void setRID(int id){
         this.rID = id;
     }
     
@@ -116,17 +95,6 @@ public class Reservation implements Serializable {
     
     public String getRTable(){
         return getTable().getTDescription();
-    }    
-    
-    public String getTableDescr() {
-        return tableDescr;
-    }
-
-    public void setTableDescr(String tableDescr) {
-        this.tableDescr = tableDescr;
-    }
-    
-
-    
+    }       
     
 }

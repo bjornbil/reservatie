@@ -24,7 +24,6 @@ public interface ReservationSystemRemote {
     public List<Tafel> getTables();
     public void addReservation(Reservation r);
     public void editReservation(Reservation r);
-    public Tafel getTable(String description);
     public Reservation getReservation(Integer id);
     public Tafel getTable(Integer id);
     public void deleteReservation(Integer id);

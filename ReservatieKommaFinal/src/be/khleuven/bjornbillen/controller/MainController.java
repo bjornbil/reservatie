@@ -40,6 +40,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+import org.thehecklers.dialogfx.DialogFX;
 
 
 
@@ -119,7 +120,6 @@ public class MainController implements Initializable {
         mins = new ArrayList<String>();
         tafels = new ArrayList<String>();
         places = new ArrayList<Integer>();
-        tableInput.getItems().addAll(tafels);
         refresh();
         Collections.addAll(hours,12,13,14,15,16,17,18,19,20,21,22,23);
         Collections.addAll(mins,"00","15","30","45"); 
@@ -127,9 +127,13 @@ public class MainController implements Initializable {
         placesInject.getItems().clear();
         placesInject.getItems().addAll(places);
         startHoursInput.getItems().addAll(hours);
+        startHoursInput.getSelectionModel().select(0);
         startMinsInput.getItems().addAll(mins);
+        startMinsInput.getSelectionModel().select(0);
         stopHoursInput.getItems().addAll(hours);
+        stopHoursInput.getSelectionModel().select(0);
         stopMinsInput.getItems().addAll(mins);
+        stopMinsInput.getSelectionModel().select(0);
        
     }
     
@@ -137,14 +141,21 @@ public class MainController implements Initializable {
     public void onAddReservation(){
         String beginuur = startHoursInput.getSelectionModel().getSelectedItem().toString() + ":" + startMinsInput.getSelectionModel().getSelectedItem().toString();
         String einduur = stopHoursInput.getSelectionModel().getSelectedItem().toString() + ":" + stopMinsInput.getSelectionModel().getSelectedItem().toString();
-        Tafel tafel = Database.REMOTEDB.getTable(Integer.parseInt(tableInput.getSelectionModel().getSelectedItem().toString()));
-        System.out.println(tafel.getTID());
+        Tafel tafel = Database.REMOTEDB.getTable(tableInput.getSelectionModel().getSelectedIndex()+1);
         String datum = dateInput.getText();
         String naam = nameInput.getText();
+        if (naam.isEmpty() || datum.isEmpty()){
+        DialogFX dialog = new DialogFX(DialogFX.Type.ERROR);
+        dialog.setTitleText("ERROR");
+        dialog.setMessage("Gelieve een geldige naam en datum op te geven");
+        dialog.showDialog();
+        }
+        else {
         Reservation nieuweres = new Reservation(naam,datum,beginuur,einduur,tafel);
         Database.REMOTEDB.addReservation(nieuweres);
         maakFormLeeg();
         refresh();
+        }
     }
     
     @FXML
@@ -153,19 +164,22 @@ public class MainController implements Initializable {
         Integer aantalplaatsen = Integer.parseInt(placesInject.getSelectionModel().getSelectedItem().toString());
         Tafel t = new Tafel(tafelnaam, aantalplaatsen);
         Database.REMOTEDB.addTable(t);
-        refresh();
         maakFormLeeg();
+        refresh();
     }
     
     private void refresh(){
+        List<String> descr = new ArrayList<String>();
         if (!Database.REMOTEDB.getTables().isEmpty()){
             tafels.clear();
             tableInput.getItems().clear();
         for (Tafel t : Database.REMOTEDB.getTables()){
-            tafels.add(t.getTID().toString());
+            tafels.add(Integer.toString(t.getTID()));
+            descr.add(t.getTDescription());            
         }
+        tableInput.getSelectionModel().select(0);
         }
-        tableInput.getItems().addAll(tafels);
+        tableInput.getItems().addAll(descr);
         if (!Database.REMOTEDB.getReservations().isEmpty()){
             tableID.getItems().clear();
             for (Reservation r : Database.REMOTEDB.getReservations()){

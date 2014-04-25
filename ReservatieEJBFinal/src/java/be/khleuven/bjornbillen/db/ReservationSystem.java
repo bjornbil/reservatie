@@ -13,6 +13,7 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -78,10 +79,5 @@ public class ReservationSystem implements ReservationSystemRemote {
         return manager.find(Tafel.class,id);
     }
 
-    @Override
-    public Tafel getTable(String descr) {
-        Tafel t = manager.createQuery("Select t from Tafel t WHERE t.tDescription = :descr",Tafel.class).getSingleResult();
-        return t;
-    }
-    
+   
 }
