@@ -15,12 +15,16 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -30,7 +34,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Bjorn
  */
 @Entity
-@javax.persistence.Table(name = "TAFEL")
+@Table(name = "TAFEL", uniqueConstraints={@UniqueConstraint(columnNames={"TABLEID"})})
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Tafel.findAll", query = "SELECT t FROM Tafel t"),
@@ -38,9 +42,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 })
 public class Tafel implements Serializable{
     @Id
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "ID")  
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "TABLEID")
     private Integer tID;
     @Basic(optional = false)
     @NotNull
@@ -51,8 +54,8 @@ public class Tafel implements Serializable{
     @NotNull
     @Column(name = "PLACES")
     private Integer tPlaces;
-    @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
-    @JoinTable(name="RES_TAFEL", joinColumns={@JoinColumn(name="TAFEL_ID", referencedColumnName="tID")}, inverseJoinColumns={@JoinColumn(name="RES_ID", referencedColumnName="rID")})
+    @OneToMany
+    @JoinTable(name="RES_TAFEL", joinColumns={@JoinColumn(name="TAFEL_ID", referencedColumnName="TAFELID")}, inverseJoinColumns={@JoinColumn(name="RES_ID", referencedColumnName="RESID")})
     private List<Reservation> reservations;
 
   
@@ -61,8 +64,7 @@ public class Tafel implements Serializable{
     
     }
     
-    public Tafel(Integer sID, String sDescription, Integer places){
-       setTID(sID);
+    public Tafel(String sDescription, Integer places){
        setTDescription(sDescription);
        setTPlaces(places);
     }

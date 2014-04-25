@@ -135,14 +135,13 @@ public class MainController implements Initializable {
     
     @FXML
     public void onAddReservation(){
-        number = Database.REMOTEDB.getReservations().size() + 1;
         String beginuur = startHoursInput.getSelectionModel().getSelectedItem().toString() + ":" + startMinsInput.getSelectionModel().getSelectedItem().toString();
         String einduur = stopHoursInput.getSelectionModel().getSelectedItem().toString() + ":" + stopMinsInput.getSelectionModel().getSelectedItem().toString();
         Tafel tafel = Database.REMOTEDB.getTable(Integer.parseInt(tableInput.getSelectionModel().getSelectedItem().toString()));
         System.out.println(tafel.getTID());
         String datum = dateInput.getText();
         String naam = nameInput.getText();
-        Reservation nieuweres = new Reservation(number,naam,datum,beginuur,einduur,tafel);
+        Reservation nieuweres = new Reservation(naam,datum,beginuur,einduur,tafel);
         Database.REMOTEDB.addReservation(nieuweres);
         maakFormLeeg();
         refresh();
@@ -150,10 +149,9 @@ public class MainController implements Initializable {
     
     @FXML
     public void onAddTable(){
-        number2 = Database.REMOTEDB.getTables().size() + 1;
         String tafelnaam = tableInject.getText();
         Integer aantalplaatsen = Integer.parseInt(placesInject.getSelectionModel().getSelectedItem().toString());
-        Tafel t = new Tafel(number2, tafelnaam, aantalplaatsen);
+        Tafel t = new Tafel(tafelnaam, aantalplaatsen);
         Database.REMOTEDB.addTable(t);
         refresh();
         maakFormLeeg();

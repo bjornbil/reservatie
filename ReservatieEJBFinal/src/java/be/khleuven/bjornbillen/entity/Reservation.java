@@ -7,17 +7,7 @@
 package be.khleuven.bjornbillen.entity;
 
 import java.io.Serializable;
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -27,7 +17,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Bjorn
  */
 @Entity
-@Table(name = "RESERVATION")
+@Table(name = "RESERVATION", uniqueConstraints={@UniqueConstraint(columnNames={"RESID"})})
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Reservation.findAll", query = "SELECT r FROM Reservation r"),
@@ -37,9 +27,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 })
 public class Reservation implements Serializable {
     @Id
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "ID")  
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    @Column(name="RESID")
     private Integer rID;
     @Basic(optional = false)
     @NotNull
@@ -59,16 +48,16 @@ public class Reservation implements Serializable {
     @Column(name = "STOPHOUR")
     private String rStopHour;
     @NotNull
-    @ManyToOne(cascade=CascadeType.ALL)
+    @ManyToOne
     private Tafel rTable;
-    
-    private String tableDescr;
+
+ 
+    private String tableDescr = "";
 
     public Reservation() {
     }
     
-    public Reservation(Integer sID, String sName, String sDate, String sStartHour, String sStopHour, Tafel sTable){
-        this.rID = sID;
+    public Reservation(String sName, String sDate, String sStartHour, String sStopHour, Tafel sTable){
         this.rName = sName;
         this.rDate = sDate;
         this.rStartHour = sStartHour;
@@ -128,6 +117,14 @@ public class Reservation implements Serializable {
     public String getRTable(){
         return getTable().getTDescription();
     }    
+    
+    public String getTableDescr() {
+        return tableDescr;
+    }
+
+    public void setTableDescr(String tableDescr) {
+        this.tableDescr = tableDescr;
+    }
     
 
     
