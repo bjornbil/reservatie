@@ -14,22 +14,19 @@ import javafx.beans.property.StringProperty;
 import javafx.scene.control.ControlBuilder;
 import javafx.util.Builder;
 
-
 /**
- * Created with IntelliJ IDEA.
- * User: hansolo
- * Date: 04.09.12
- * Time: 09:05
- * To change this template use File | Settings | File Templates.
- * 
- * Mods: HecklerMark
- * Date: 25.09.12
- * Desc: Added stylesheet capability. Guess I need to check out IDEA for this project now (sigh). :-)
+ * Created with IntelliJ IDEA. User: hansolo Date: 04.09.12 Time: 09:05 To
+ * change this template use File | Settings | File Templates.
+ *
+ * Mods: HecklerMark Date: 25.09.12 Desc: Added stylesheet capability. Guess I
+ * need to check out IDEA for this project now (sigh). :-)
  */
-public class DialogFXBuilder <B extends DialogFXBuilder<B>> extends ControlBuilder<B> implements Builder<DialogFX> {
+public class DialogFXBuilder<B extends DialogFXBuilder<B>> extends ControlBuilder<B> implements Builder<DialogFX> {
+
     private HashMap<String, Property> properties = new HashMap<String, Property>();
 
-    protected DialogFXBuilder() {}
+    protected DialogFXBuilder() {
+    }
 
     public static DialogFXBuilder create() {
         return new DialogFXBuilder();
@@ -71,9 +68,9 @@ public class DialogFXBuilder <B extends DialogFXBuilder<B>> extends ControlBuild
         properties.put("stylesheet", new SimpleStringProperty(STYLESHEET));
         return this;
     }
-    
 
-    @Override public DialogFX build() {
+    @Override
+    public DialogFX build() {
         final DialogFX CONTROL = new DialogFX();
 
         for (String key : properties.keySet()) {
@@ -81,8 +78,8 @@ public class DialogFXBuilder <B extends DialogFXBuilder<B>> extends ControlBuild
                 CONTROL.addButtons(((ObjectProperty<List<String>>) properties.get(key)).get());
             } else if ("buttonsLabels1".equals(key)) {
                 CONTROL.addButtons(((ObjectProperty<List<String>>) properties.get(key)).get(),
-                                   ((IntegerProperty) properties.get("buttonsDefaultButton")).get(),
-                                   ((IntegerProperty) properties.get("buttonsCancelButton")).get());
+                        ((IntegerProperty) properties.get("buttonsDefaultButton")).get(),
+                        ((IntegerProperty) properties.get("buttonsCancelButton")).get());
             } else if ("type".equals(key)) {
                 CONTROL.setType(((ObjectProperty<DialogFX.Type>) properties.get(key)).get());
             } else if ("message".equals(key)) {

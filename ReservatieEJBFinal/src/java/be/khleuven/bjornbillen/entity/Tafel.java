@@ -89,4 +89,27 @@ public class Tafel implements Serializable{
     public void setTPlaces(Integer tPlaces) {
         this.tPlaces = tPlaces;
     }
+    
+    @Override
+    public boolean equals(Object o){
+        boolean equals = false;
+        Tafel t = null;
+        if (o instanceof Tafel){
+        t = (Tafel) o;
+        if (t.tID == this.tID){
+        equals = true;
+        }
+        }
+        return equals;
+        
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 19 * hash + this.tID;
+        return hash;
+    }
+    
+    
 }

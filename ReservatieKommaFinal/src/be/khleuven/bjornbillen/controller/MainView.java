@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package be.khleuven.bjornbillen.controller;
 
 import java.net.URL;
@@ -17,38 +16,39 @@ import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 /**
  *
  * @author Bjorn
  */
 public class MainView extends Application {
-    
+
     private MainController myController;
-    public static void main(String[] args){
+
+    public static void main(String[] args) {
         Application.launch(MainView.class, (java.lang.String[]) null);
     }
-    
-    @Override 
+
+    @Override
     public void start(Stage primaryStage) throws Exception {
         try {
-    Stage dialogue = new Stage();
-    Parent root = null;
-    FXMLLoader loader = new FXMLLoader();
-    root = (Parent) loader.load(getClass().getResource("MainFXML.fxml").openStream());
-    myController = loader.getController();
-     primaryStage.setTitle ("Reservatiesysteem");
-     primaryStage.setScene (new Scene (root));
-     primaryStage.show ();
-        } catch (Exception e){
+            Parent root = null;
+            FXMLLoader loader = new FXMLLoader();
+            root = (Parent) loader.load(getClass().getResource("MainFXML.fxml").openStream());
+            myController = loader.getController();
+            primaryStage.initStyle(StageStyle.UNDECORATED);
+            primaryStage.setTitle("Reservatiesysteem");
+            primaryStage.setScene(new Scene(root));
+            primaryStage.show();
+        } catch (Exception e) {
             Logger.getLogger(MainView.class.getName()).log(Level.SEVERE, null, e);
         }
     }
-    
+
     @Override
     public void stop() throws Exception {
         super.stop();
-     //   myController.destroy();
+        //   myController.destroy();
     }
-
 }

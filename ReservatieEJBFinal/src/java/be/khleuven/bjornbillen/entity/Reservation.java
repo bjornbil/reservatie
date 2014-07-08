@@ -7,6 +7,8 @@
 package be.khleuven.bjornbillen.entity;
 
 import java.io.Serializable;
+import java.util.Calendar;
+import java.util.Locale;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -25,7 +27,8 @@ public class Reservation implements Serializable {
     @Column(name = "NAME")
     private String rName;
     @Column(name = "RESDATE")
-    private String rDate;
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Calendar rDate;
     @Column(name = "STARTHOUR")
     private String rStartHour;
     @Column(name = "STOPHOUR")
@@ -37,7 +40,7 @@ public class Reservation implements Serializable {
     public Reservation() {
     }
     
-    public Reservation(String sName, String sDate, String sStartHour, String sStopHour, Tafel sTable){
+    public Reservation(String sName, Calendar sDate, String sStartHour, String sStopHour, Tafel sTable){
         this.rName = sName;
         this.rDate = sDate;
         this.rStartHour = sStartHour;
@@ -60,9 +63,13 @@ public class Reservation implements Serializable {
     public String getRName() {
         return rName;
     }
+    
+    public Calendar getDate(){
+        return rDate;
+    }
 
     public String getRDate() {
-        return rDate;
+        return rDate.get(Calendar.YEAR)+"/"+(rDate.get(Calendar.MONTH)+1)+"/"+rDate.get(Calendar.DATE);
     }
     
     public void setRID(int id){
@@ -73,7 +80,7 @@ public class Reservation implements Serializable {
         this.rName = name;
     }
     
-    public void setRDate(String date){
+    public void setRDate(Calendar date){
         this.rDate = date;
     }
     

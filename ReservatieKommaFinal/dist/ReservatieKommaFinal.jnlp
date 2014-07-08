@@ -11,8 +11,8 @@
   </resources>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="ReservatieKommaFinal.jar" size="60686" download="eager" />
-    <jar href="lib/ReservatieEJBFinal.jar" size="11080" download="eager" />
+    <jar href="ReservatieKommaFinal.jar" size="112749" download="eager" />
+    <jar href="lib/ReservatieEJBFinal.jar" size="11935" download="eager" />
     <jar href="lib/appserv-rt.jar" size="2641" download="eager" />
     <jar href="lib/gf-client.jar" size="18637" download="eager" />
     <jar href="lib/javaee.jar" size="2813" download="eager" />

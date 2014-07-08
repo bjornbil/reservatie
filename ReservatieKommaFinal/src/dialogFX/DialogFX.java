@@ -20,9 +20,11 @@ import javafx.stage.Stage;
 
 /**
  *
- * @author Mark Heckler (mark.heckler@gmail.com, @HecklerMark)
+ * @author Mark Heckler (mark.heckler@gmail.com,
+ * @HecklerMark)
  */
 public final class DialogFX extends Stage {
+
     /**
      * Type of dialog box is one of the following, each with a distinct icon:
      * <p>
@@ -36,8 +38,10 @@ public final class DialogFX extends Stage {
      * <p>
      * If no type is specified in the constructor, the default is INFO.
      */
-    public enum Type { ACCEPT, ERROR, INFO, QUESTION };
-    
+    public enum Type {
+
+        ACCEPT, ERROR, INFO, QUESTION
+    };
     private Type type;
     private Stage stage;
     private Scene scene;
@@ -50,71 +54,71 @@ public final class DialogFX extends Stage {
     private int buttonCount = 0;
     private int buttonSelected = -1;
     private List<String> stylesheets = new ArrayList<String>();
-    
+
     /**
      * Default constructor for a DialogFX dialog box. Creates an INFO box.
-     * 
+     *
      * @see Type
      */
     public DialogFX() {
         initDialog(Type.INFO);
     }
-    
+
     /**
      * Constructor for a DialogFX dialog box that accepts one of the enumerated
      * types listed above.
-     * 
+     *
      * @param t The type of DialogFX dialog box to create.
      * @see Type
      */
     public DialogFX(Type t) {
         initDialog(t);
     }
-    
+
     /**
      * Public method used to add custom buttons to a DialogFX dialog.
-     * 
+     *
      * @param labels A list of String variables. While technically unlimited,
      * usability makes the practical limit around three.
      */
     public void addButtons(List<String> labels) {
         addButtons(labels, -1, -1);
     }
-    
+
     /**
      * Public method used to add custom buttons to a DialogFX dialog.
      * Additionally, default and cancel buttons are identified so user can
      * trigger them with the ENTER key (default) and ESCAPE (cancel).
-     * 
+     *
      * @param labels A list of String variables. While technically unlimited,
      * usability makes the practical limit around three.
-     * @param defaultBtn Position within the list of labels of the button to 
+     * @param defaultBtn Position within the list of labels of the button to
      * designate as the default button.
-     * @param cancelBtn Position within the list of labels of the button to 
+     * @param cancelBtn Position within the list of labels of the button to
      * designate as the cancel button.
      */
     public void addButtons(List<String> labels, int defaultBtn, int cancelBtn) {
         buttonLabels = labels;
-        
-        for (int i=0; i<labels.size(); i++) {
-            final Button btn = new Button(labels.get(i));
-            
-            btn.setDefaultButton(i==defaultBtn);
-            btn.setCancelButton(i==cancelBtn);
 
-            if ( i == defaultBtn ) {
-                Platform.runLater( new Runnable() {
+        for (int i = 0; i < labels.size(); i++) {
+            final Button btn = new Button(labels.get(i));
+
+            btn.setDefaultButton(i == defaultBtn);
+            btn.setCancelButton(i == cancelBtn);
+
+            if (i == defaultBtn) {
+                Platform.runLater(new Runnable() {
                     @Override
                     public void run() {
                         btn.requestFocus();
                     }
-                } );
+                });
             }
-            
+
             buttonCancel = cancelBtn;
-            
+
             btn.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
+                @Override
                 public void handle(ActionEvent evt) {
                     buttonSelected = buttonLabels.indexOf(((Button) evt.getSource()).getText());
                     stage.close();
@@ -122,22 +126,22 @@ public final class DialogFX extends Stage {
             });
             buttonBox.getChildren().add(btn);
         }
-        
+
         buttonBox.setAlignment(Pos.CENTER);
-        
+
         BorderPane.setAlignment(buttonBox, Pos.CENTER);
-        BorderPane.setMargin(buttonBox, new Insets(5,5,5,5));
+        BorderPane.setMargin(buttonBox, new Insets(5, 5, 5, 5));
         pane.setBottom(buttonBox);
-        buttonCount = labels.size();  
+        buttonCount = labels.size();
     }
-    
+
     private void addOKButton() {
         List<String> labels = new ArrayList<String>(1);
         labels.add("OK");
-        
+
         addButtons(labels, 0, 0);
     }
-    
+
     private void addYesNoButtons() {
         /*
          * No default or cancel buttons designated, by design.
@@ -149,86 +153,86 @@ public final class DialogFX extends Stage {
         List<String> labels = new ArrayList<String>(2);
         labels.add("Yes");
         labels.add("No");
-        
+
         addButtons(labels);
     }
-    
+
     /**
-     * Allows developer to add stylesheet for DialogFX dialog, supplementing or 
+     * Allows developer to add stylesheet for DialogFX dialog, supplementing or
      * overriding existing styling.
-     * 
-     * @param stylesheet String variable containing the name or path/name 
-     * of the stylesheet to add to the dialog's scene and contained controls.
+     *
+     * @param stylesheet String variable containing the name or path/name of the
+     * stylesheet to add to the dialog's scene and contained controls.
      */
     public void addStylesheet(String stylesheet) {
         //stylesheet = stylesheet;
         try {
-            String newStyle  = this.getClass().getResource(stylesheet).toExternalForm();
+            String newStyle = this.getClass().getResource(stylesheet).toExternalForm();
             stylesheets.add(newStyle);
         } catch (Exception ex) {
             System.err.println("Unable to find specified stylesheet: " + stylesheet);
             System.err.println("Error message: " + ex.getMessage());
         }
     }
-    
+
     private void initDialog(Type t) {
         stage = new Stage();
-        
+
         setType(t);
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setMaxWidth(Screen.getPrimary().getVisualBounds().getWidth() / 2);
     }
-    
+
     private void loadIconFromResource(String fileName) {
         Image imgIcon = new Image(getClass().getResourceAsStream(fileName));
         icon.setPreserveRatio(true);
         icon.setFitHeight(48);
         icon.setImage(imgIcon);
     }
-   
+
     /**
      * Sets the text displayed within the DialogFX dialog box. Word wrap ensures
      * that all text is displayed.
-     * 
+     *
      * @param msg String variable containing the text to display.
      */
     public void setMessage(String msg) {
         message.setText(msg);
         message.setWrapText(true);
     }
-   
+
     /**
      * Sets the modality of the DialogFX dialog box.
-     * 
+     *
      * @param isModal Boolean. A true value = APPLICATION_MODAL, false = NONE.
      */
     public void setModal(boolean isModal) {
         stage.initModality((isModal ? Modality.APPLICATION_MODAL : Modality.NONE));
     }
-    
+
     /**
      * Sets the text diplayed in the title bar of the DialogFX dialog box.
-     * 
+     *
      * @param title String containing the text to place in the title bar.
      */
     public void setTitleText(String title) {
         stage.setTitle(title);
     }
-    
+
     /**
      * Sets the Type of DialogFX dialog box to display.
-     * 
+     *
      * @param typeToSet One of the supported types of dialogs.
      * @see Type
      */
     public void setType(Type typeToSet) {
         type = typeToSet;
     }
-    
+
     private void populateStage() {
         String iconFile;
-        
-        switch ( type ) {
+
+        switch (type) {
             case ACCEPT:
                 iconFile = "Dialog-accept.jpg";
                 addOKButton();
@@ -248,23 +252,23 @@ public final class DialogFX extends Stage {
                 iconFile = "Dialog-info.jpg";
                 break;
         }
-        
+
         try {
             loadIconFromResource(iconFile);
         } catch (Exception ex) {
             System.err.println("Exception trying to load icon file: " + ex.getMessage());
         }
-        
+
         BorderPane.setAlignment(icon, Pos.CENTER);
-        BorderPane.setMargin(icon, new Insets(5,5,5,5));
+        BorderPane.setMargin(icon, new Insets(5, 5, 5, 5));
         pane.setLeft(icon);
-        
+
         BorderPane.setAlignment(message, Pos.CENTER);
-        BorderPane.setMargin(message, new Insets(5,5,5,5));
+        BorderPane.setMargin(message, new Insets(5, 5, 5, 5));
         pane.setCenter(message);
-        
+
         scene = new Scene(pane);
-        for (int i=0;i<stylesheets.size();i++) {
+        for (int i = 0; i < stylesheets.size(); i++) {
             try {
                 scene.getStylesheets().add(stylesheets.get(i));
             } catch (Exception ex) {
@@ -274,24 +278,24 @@ public final class DialogFX extends Stage {
         }
         stage.setScene(scene);
     }
-    
+
     /**
      * Displays the DialogFX dialog box and waits for user input.
-     * 
+     *
      * @return The index of the button pressed.
      */
     public int showDialog() {
         populateStage();
-        if ( type == Type.QUESTION ) {
-            if ( buttonCount == 0 ) {
+        if (type == Type.QUESTION) {
+            if (buttonCount == 0) {
                 addYesNoButtons();
             }
         }
-        
+
         stage.setResizable(false);
         stage.sizeToScene();
         stage.centerOnScreen();
         stage.showAndWait();
-        return ( buttonSelected == -1 ? buttonCancel : buttonSelected );
+        return (buttonSelected == -1 ? buttonCancel : buttonSelected);
     }
 }

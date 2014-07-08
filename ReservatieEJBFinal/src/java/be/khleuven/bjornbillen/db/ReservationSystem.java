@@ -78,6 +78,5 @@ public class ReservationSystem implements ReservationSystemRemote {
     public Tafel getTable(Integer id) {
         return manager.find(Tafel.class,id);
     }
-
    
 }
